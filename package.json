@@ -1,20 +1,20 @@
 {
-  "name": "byteballcore",
-  "description": "Byteball Core",
-  "author": "Byteball",
+  "name": "millixcore",
+  "description": "Millix Core",
+  "author": "Millix",
   "version": "0.2.88",
   "keywords": [
-    "byteball",
+    "millix",
     "multisignature"
   ],
-  "homepage": "https://github.com/byteball/byteballcore",
+  "homepage": "https://github.com/millix/millixcore",
   "license": "MIT",
   "repository": {
-    "url": "git://github.com/byteball/byteballcore.git",
+    "url": "git://github.com/millix/millixcore.git",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/byteball/byteballcore/issues"
+    "url": "https://github.com/millix/millixcore/issues"
   },
   "browser": {
     "request": "browser-request",

@@ -1,15 +1,15 @@
-# Byteball core
+# Millix core
 
-This is a library used in [Byteball](https://byteball.org) clients.  Never used directly.  Some of the clients that require the library:
+This is a library used in [Millix](https://millix.org) clients.  Never used directly.  Some of the clients that require the library:
 
-* [Byteball](../../../byteball) - GUI wallet for Mac, Windows, Linux, iOS, and Android.
-* [Headless Byteball](../../../headless-byteball) - headless wallet, primarily for server side use.
-* [Byteball Relay](../../../byteball-relay) - relay node for Byteball network.  It doesn't hold any private keys.
-* [Byteball Hub](../../../byteball-hub) - hub for Byteball network.  Includes the relay, plus can store and forward end-to-end encrypted messages among devices on the Byteball network.
+* [Millix](../../../millix) - GUI wallet for Mac, Windows, Linux, iOS, and Android.
+* [Headless Millix](../../../headless-millix) - headless wallet, primarily for server side use.
+* [Millix Relay](../../../millix-relay) - relay node for Millix network.  It doesn't hold any private keys.
+* [Millix Hub](../../../millix-hub) - hub for Millix network.  Includes the relay, plus can store and forward end-to-end encrypted messages among devices on the Millix network.
 
 ## Developer guides
 
-See the [wiki](https://github.com/byteball/byteballcore/wiki/Byteball-Developer-Guides).  Many of the features are not documented yet, see other [byteball repositories](https://github.com/byteball) as samples, for APIs see the `exports` of node.js modules.
+See the [wiki](https://github.com/millix/millixcore/wiki/Millix-Developer-Guides).  Many of the features are not documented yet, see other [millix repositories](https://github.com/millix) as samples, for APIs see the `exports` of node.js modules.
 
 ## Configuring
 
@@ -27,11 +27,11 @@ This is the list of some of the settings that the library understands (your app 
 
 #### conf.port
 
-The port to listen on.  If you don't want to accept incoming connections at all, set port to `null`, which is the default.  If you do want to listen, you will usually have a proxy, such as nginx, accept websocket connections on standard port 443 and forward them to your byteball daemon that listens on port 6611 on the local interface.
+The port to listen on.  If you don't want to accept incoming connections at all, set port to `null`, which is the default.  If you do want to listen, you will usually have a proxy, such as nginx, accept websocket connections on standard port 443 and forward them to your millix daemon that listens on port 6611 on the local interface.
 
 #### conf.storage
 
-Storage backend -- mysql or sqlite, the default is sqlite.  If sqlite, the database files are stored in the app data folder.  If mysql, you need to also initialize the database with [byteball.sql](byteball.sql) and set connection params, e.g. in conf.json in the app data folder:
+Storage backend -- mysql or sqlite, the default is sqlite.  If sqlite, the database files are stored in the app data folder.  If mysql, you need to also initialize the database with [millix.sql](millix.sql) and set connection params, e.g. in conf.json in the app data folder:
 
 ```json
 {
@@ -40,9 +40,9 @@ Storage backend -- mysql or sqlite, the default is sqlite.  If sqlite, the datab
 	"database": {
 		"max_connections": 30,
 		"host"     : "localhost",
-		"user"     : "byteball",
+		"user"     : "millix",
 		"password" : "yourmysqlpassword",
-		"name"     : "byteball"
+		"name"     : "millix"
 	}
 }
 ```
@@ -52,7 +52,7 @@ Work as light client (`true`) or full node (`false`).  The default is full clien
 
 #### conf.bServeAsHub
 
-Whether to serve as hub on the Byteball network (store and forward e2e-encrypted messages for devices that connect to your hub).  The default is `false`.
+Whether to serve as hub on the Millix network (store and forward e2e-encrypted messages for devices that connect to your hub).  The default is `false`.
 
 #### conf.myUrl
 
@@ -72,9 +72,9 @@ To lower disk load and increase sync speed, you can optionally disable flushing 
 
 ## Accepting incoming connections
 
-Byteball network works over secure WebSocket protocol wss://.  To accept incoming connections, you'll need a valid TLS certificate (you can get a free one from [letsencrypt.org](https://letsencrypt.org)) and a domain name (you can get a free domain from [Freenom](http://www.freenom.com/)).  Then you accept connections on standard port 443 and proxy them to your locally running byteball daemon.
+Millix network works over secure WebSocket protocol wss://.  To accept incoming connections, you'll need a valid TLS certificate (you can get a free one from [letsencrypt.org](https://letsencrypt.org)) and a domain name (you can get a free domain from [Freenom](http://www.freenom.com/)).  Then you accept connections on standard port 443 and proxy them to your locally running millix daemon.
 
-This is an example configuration for nginx to accept websocket connections at wss://byteball.one/bb and forward them to locally running daemon that listens on port 6611:
+This is an example configuration for nginx to accept websocket connections at wss://millix.one/bb and forward them to locally running daemon that listens on port 6611:
 
 ```nginx
 server {
@@ -82,14 +82,14 @@ server {
 	listen [::]:80 default_server;
 	listen 443 ssl;
 	listen [::]:443 ssl;
-	ssl_certificate "/etc/letsencrypt/live/byteball.one/fullchain.pem";
-	ssl_certificate_key "/etc/letsencrypt/live/byteball.one/privkey.pem";
+	ssl_certificate "/etc/letsencrypt/live/millix.one/fullchain.pem";
+	ssl_certificate_key "/etc/letsencrypt/live/millix.one/privkey.pem";
 
-	if ($host != "byteball.one") {
-		rewrite ^(.*)$ https://byteball.one$1 permanent;
+	if ($host != "millix.one") {
+		rewrite ^(.*)$ https://millix.one$1 permanent;
 	}
 	if ($https != "on") {
-		rewrite ^(.*)$ https://byteball.one$1 permanent;
+		rewrite ^(.*)$ https://millix.one$1 permanent;
 	}
 
 	location = /bb {
